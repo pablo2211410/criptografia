@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Start | Unidade: Criptografia</title>
+  <style>
+    :root {
+      --bg-color: #0f172a;
+      --card-bg: #1e293b;
+      --code-bg: #0b1120;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-hover: #0284c7;
+      --green: #10b981;
+      --border: #334155;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      line-height: 1.7;
+      padding-bottom: 60px;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-block;
+      background-color: rgba(56, 189, 248, 0.15);
+      color: var(--accent);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 4px 14px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+
+    header h1 {
+      font-size: 2.2rem;
+      margin-bottom: 8px;
+      color: #ffffff;
+    }
+
+    header p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+    }
+
+    main {
+      max-width: 860px;
+      margin: 32px auto;
+      padding: 0 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    .card h2 {
+      font-size: 1.35rem;
+      color: var(--accent);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .card p {
+      margin-bottom: 14px;
+      color: var(--text-main);
+    }
+
+    .card p:last-child {
+      margin-bottom: 0;
+    }
+
+    .speech-box {
+      background-color: rgba(56, 189, 248, 0.08);
+      border-left: 4px solid var(--accent);
+      padding: 16px 20px;
+      border-radius: 0 8px 8px 0;
+      font-style: italic;
+    }
+
+    .code-wrapper {
+      background-color: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 16px 0;
+      overflow: hidden;
+    }
+
+    .code-header {
+      background-color: #162032;
+      padding: 8px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .copy-btn {
+      background-color: transparent;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      border-radius: 6px;
+      padding: 4px 12px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .copy-btn:hover {
+      background-color: var(--accent);
+      color: #0f172a;
+      font-weight: 600;
+    }
+
+    .copy-btn.copied {
+      background-color: var(--green);
+      border-color: var(--green);
+      color: #0f172a;
+      font-weight: 600;
+    }
+
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      font-family: 'Consolas', 'Courier New', monospace;
+      font-size: 0.95rem;
+      color: #e2e8f0;
+    }
+
+    .kw { color: #c084fc; }
+    .str { color: #34d399; }
+    .fn { color: #60a5fa; }
+
+    /* Seção Interativa */
+    .lab-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .lab-controls input {
+      flex: 1;
+      min-width: 200px;
+      padding: 10px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background-color: var(--code-bg);
+      color: #ffffff;
+      font-size: 1rem;
+    }
+
+    .lab-controls input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .btn-primary {
+      background-color: var(--accent);
+      color: #0f172a;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--accent-hover);
+      color: #ffffff;
+    }
+
+    .btn-secondary {
+      background-color: #334155;
+      color: #f1f5f9;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-secondary:hover {
+      background-color: #475569;
+    }
+
+    .ascii-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .ascii-item {
+      background-color: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 14px;
+      text-align: center;
+      min-width: 64px;
+    }
+
+    .ascii-char {
+      display: block;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: var(--accent);
+      font-family: monospace;
+    }
+
+    .ascii-val {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--green);
+      font-family: monospace;
+      margin-top: 4px;
+    }
+
+    footer {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <span class="badge">Start • Segurança Digital</span>
+    <h1>Unidade: Criptografia</h1>
+    <p>Instrutor: Marcelo Pauleto</p>
+  </header>
+
+  <main>
+    <!-- Seção 1 -->
+    <section class="card">
+      <h2>Apresentando o instrutor e o tema da unidade</h2>
+      <div class="speech-box">
+        <p>[♪] Olá, estudantes! Sejam bem-vindos a mais uma unidade. Meu nome é Marcelo Pauleto, sou instrutor na Start. Nesta unidade, vamos abordar um assunto muito importante e misterioso: a criptografia.</p>
+      </div>
+    </section>
+
+    <!-- Seção 2 -->
+    <section class="card">
+      <h2>Introduzindo conceitos de segurança digital</h2>
+      <p>Já refletimos sobre como nossas senhas são armazenadas em algumas plataformas, redes sociais, jogos ou até mesmo em bancos? Já consideramos como essas informações são mascaradas e como são tão sensíveis que não podem ser vazadas de forma alguma? Vamos começar a introduzir esses conceitos nesta unidade.</p>
+    </section>
+
+    <!-- Seção 3 -->
+    <section class="card">
+      <h2>Explorando a importância da criptografia</h2>
+      <p>Há muitos conteúdos interessantes que certamente aprenderemos juntos, para entender melhor como isso funciona no dia a dia, para estarmos mais seguros e também para explicar aos nossos familiares como a segurança digital na internet é realizada atualmente.</p>
+    </section>
+
+    <!-- Seção 4 -->
+    <section class="card">
+      <h2>Iniciando a construção do algoritmo de criptografia</h2>
+      <p>Vamos começar a construir nosso algoritmo de criptografia, que inicialmente utilizava apenas números. No entanto, sabemos que senhas compostas apenas por números são consideradas fracas. Portanto, precisamos expandir nosso algoritmo para incluir letras.</p>
+      <p>Primeiro, vamos definir nosso alfabeto. Para isso, criaremos uma variável chamada <code>alfabeto</code> que conterá todas as letras do alfabeto em minúsculas:</p>
+
+      <div class="code-wrapper">
+        <div class="code-header">
+          <span>Python</span>
+          <button class="copy-btn" onclick="copiarCodigo(this, 'code1')">Copiar código</button>
+        </div>
+        <pre id="code1">alfabeto = <span class="str">"abcdefghijklmnopqrstuvwxyz"</span></pre>
+      </div>
+    </section>
+
+    <!-- Seção 5 -->
+    <section class="card">
+      <h2>Definindo a senha de exemplo</h2>
+      <p>Agora, vamos pensar em uma senha composta por letras. Usaremos <strong>"marcelo"</strong> como exemplo. Precisamos definir essa senha em nosso código:</p>
+
+      <div class="code-wrapper">
+        <div class="code-header">
+          <span>Python</span>
+          <button class="copy-btn" onclick="copiarCodigo(this, 'code2')">Copiar código</button>
+        </div>
+        <pre id="code2">alfabeto = <span class="str">"abcdefghijklmnopqrstuvwxyz"</span>
+senha = <span class="str">"marcelo"</span></pre>
+      </div>
+    </section>
+
+    <!-- Seção 6 -->
+    <section class="card">
+      <h2>Convertendo letras em valores ASCII</h2>
+      <p>O próximo passo é criar um laço de repetição que percorra cada letra do alfabeto. Para cada letra, utilizaremos a tabela ASCII para convertê-la em um número. Isso é feito com a função <code>ord</code>, que retorna o valor ASCII de um caractere:</p>
+
+      <div class="code-wrapper">
+        <div class="code-header">
+          <span>Python</span>
+          <button class="copy-btn" onclick="copiarCodigo(this, 'code3')">Copiar código</button>
+        </div>
+        <pre id="code3">alfabeto = <span class="str">"abcdefghijklmnopqrstuvwxyz"</span>
+
+<span class="kw">for</span> letra <span class="kw">in</span> alfabeto:
+    numero = <span class="fn">ord</span>(letra)
+    <span class="fn">print</span>(letra, numero)</pre>
+      </div>
+
+      <p>Com esse código, conseguimos converter cada letra do alfabeto em seu respectivo valor ASCII. Isso nos permite manipular as letras de forma numérica, o que é essencial para a criptografia.</p>
+    </section>
+
+    <!-- Seção 7 -->
+    <section class="card">
+      <h2>Preparando para a criptografia da senha</h2>
+      <p>Agora que conseguimos converter as letras em números inteiros, nós podemos olhar para o nosso algoritmo da primeira aula e encontrar um padrão e criar a nossa senha criptografada usando a nossa senha de exemplo <strong>"marcelo"</strong>. Mas esse é o conteúdo para o próximo vídeo. Até lá!</p>
+    </section>
+
+    <!-- Laboratório Interativo -->
+    <section class="card">
+      <h2>Prática Interativa: Conversor ASCII (função ord)</h2>
+      <p>Teste na prática como cada letra da senha <strong>"marcelo"</strong> (ou de todo o alfabeto) é convertida em número inteiro:</p>
+
+      <div class="lab-controls">
+        <input type="text" id="textoEntrada" value="marcelo" placeholder="Digite uma palavra ou senha...">
+        <button class="btn-primary" onclick="converterTexto()">Converter Palavra</button>
+        <button class="btn-secondary" onclick="converterAlfabeto()">Simular Alfabeto (a-z)</button>
+      </div>
+
+      <div id="resultadoAscii" class="ascii-grid"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Material de Apoio • Curso Start — Unidade de Criptografia</p>
+  </footer>
+
+  <script>
+    function copiarCodigo(botao, idElemento) {
+      const textoCodigo = document.getElementById(idElemento).innerText;
+      navigator.clipboard.writeText(textoCodigo).then(() => {
+        botao.innerText = "Copiado!";
+        botao.classList.add("copied");
+        setTimeout(() => {
+          botao.innerText = "Copiar código";
+          botao.classList.remove("copied");
+        }, 2000);
+      });
+    }
+
+    function renderizarAscii(texto) {
+      const container = document.getElementById("resultadoAscii");
+      container.innerHTML = "";
+
+      for (let i = 0; i < texto.length; i++) {
+        const caractere = texto[i];
+        const codigoAscii = caractere.charCodeAt(0);
+
+        const item = document.createElement("div");
+        item.className = "ascii-item";
+        item.innerHTML = `
+          <span class="ascii-char">${caractere === " " ? "␣" : caractere}</span>
+          <span class="ascii-val">${codigoAscii}</span>
+        `;
+        container.appendChild(item);
+      }
+    }
+
+    function converterTexto() {
+      const entrada = document.getElementById("textoEntrada").value;
+      renderizarAscii(entrada);
+    }
+
+    function converterAlfabeto() {
+      const alfabeto = "abcdefghijklmnopqrstuvwxyz";
+      document.getElementById("textoEntrada").value = alfabeto;
+      renderizarAscii(alfabeto);
+    }
+
+    // Inicializa mostrando a senha de exemplo "marcelo"
+    window.onload = () => converterTexto();
+  </script>
+
+</body>
+</html>
